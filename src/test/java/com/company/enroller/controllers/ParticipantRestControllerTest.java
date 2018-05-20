@@ -59,7 +59,7 @@ public class ParticipantRestControllerTest {
 		
 		given(participantService.findByLogin("testlogin")).willReturn(participant);
 		mvc.perform(get("/participants/testlogin").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-		.andExpect(content().string(new ObjectMapper().writeValueAsString(participant)));
+		.andExpect(jsonPath("login", is("testlogin")));
 		
 	}
 

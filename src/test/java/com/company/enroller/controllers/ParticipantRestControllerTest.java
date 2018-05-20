@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.company.enroller.model.Participant;
 import com.company.enroller.persistence.MeetingService;
 import com.company.enroller.persistence.ParticipantService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ParticipantRestController.class)
@@ -58,7 +59,7 @@ public class ParticipantRestControllerTest {
 		
 		given(participantService.findByLogin("testlogin")).willReturn(participant);
 		mvc.perform(get("/participants/testlogin").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-		.andExpect(content().string("{\"login\":\"testlogin\",\"password\":\"testpassword\"}"));
+		.andExpect(content().string(new ObjectMapper().writeValueAsString(participant)));
 		
 	}
 
